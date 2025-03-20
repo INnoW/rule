@@ -128,7 +128,7 @@ Proxy: &pr {type: select, proxies: [🇭🇰 香港节点, 🇸🇬 狮城节点
 Online: &ol {type: select, proxies: [✈️ 故障转移(主), 🔯 故障转移(备), 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🌐 其他地区, 🐸 手动切换1, 🐸 手动切换2, 🐸 手动切换3, 🐸 手动切换4, ♻️ 自动选择, DIRECT]}
 Driect: &dr {type: select, proxies: [DIRECT, 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🌐 其他地区, 🐸 手动切换1, 🐸 手动切换2, 🐸 手动切换3, 🐸 手动切换4, ♻️ 自动选择, ✈️ 故障转移(主), 🔯 故障转移(备)]}
 proxy-groups:
-    - {name: 🤖 AI, <<: *pr}
+  - {name: 🤖 AI, <<: *pr}
   - {name: 📹 YouTube, <<: *pr}
   - {name: 📺 Emby, <<: *pr}
   - {name: 📺 Netflix, <<: *pr}
@@ -136,8 +136,7 @@ proxy-groups:
   - {name: 🍎 Apple TV, <<: *pr}
   - {name: 🎮 游戏平台, <<: *pr}
   - {name: 🌍 国外媒体, <<: *pr}
-  - {name: ☎️ Google Voice, <<: *pr}
-  
+  - {name: ☎️ Google Voice, <<: *pr}  
   - {name: 🍀 Google, <<: *ol}
   - {name: 🚀 常用外网域名, <<: *ol}
   - {name: 🕊️ Twitter(X), <<: *ol}
@@ -145,7 +144,6 @@ proxy-groups:
   - {name: 👨🏿‍💻 GitHub, <<: *ol}
   - {name: 🐟 漏网之鱼, <<: *ol}
   - {name: 🐬 OneDrive, <<: *ol}
-  
   - {name: 🪟 Microsoft, <<: *dr}
   - {name: ♻️ Speedtest, <<: *dr}
   - {name: 🍎 Apple, <<: *dr}
@@ -160,9 +158,9 @@ proxy-groups:
   - {name: 🐸 手动切换2, type: select, include-all: true}
   - {name: 🐸 手动切换3, type: select, include-all: true}
   - {name: 🐸 手动切换4, type: select, include-all: true}
-  - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^((?!(DIRECT)).)*$"}
-  - {name: ✈️ 故障转移(主), type: fallback, include-all: true, tolerance: 20, interval: 300}
-  - {name: 🔯 故障转移(备), type: fallback, include-all: true, tolerance: 20, interval: 300}
+  - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 600, filter: "^((?!(DIRECT)).)*$"}
+  - {name: ✈️ 故障转移(主), type: fallback, include-all: true, tolerance: 20, interval: 600}
+  - {name: 🔯 故障转移(备), type: fallback, include-all: true, tolerance: 20, interval: 600}
 
 # 规则匹配
 rules:
@@ -205,8 +203,7 @@ rule-providers:
   proxylite_class: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/master/ProxyLite.list"}
   emby_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Emby/Emby.list"}
   apple tv_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AppleTV/AppleTV.list"}
-  google voice_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GoogleVoice/GoogleVoice.list"}
-  
+  google voice_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GoogleVoice/GoogleVoice.list"} 
   private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   ai_domain: {  <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-chat-!cn.mrs" }
   twitter_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/twitter.mrs"}
@@ -226,7 +223,6 @@ rule-providers:
   gfw_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
   geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
   cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
-  
   cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
   google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
   twitter_ip: { <<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/twitter.mrs"}
