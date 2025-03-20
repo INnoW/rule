@@ -1,4 +1,29 @@
 # 机场订阅
+proxy-providers:
+  BitzNet:
+    url: "链接"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: DIRECT
+    header:
+      User-Agent:
+      - "Clash.meta"
+  PQ Airport:
+    url: "链接"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: DIRECT
+    header:
+      User-Agent:
+      - "Clash.meta"
 
 # 节点信息
 proxies:
@@ -65,7 +90,7 @@ sniffer:
 tun:
   enable: true
   # system/gvisor/mixed
-  stack: mixed
+  stack: system
   dns-hijack: ["any:53", "tcp://any:53"]
   auto-route: true
   auto-redirect: true
@@ -103,7 +128,7 @@ Proxy: &pr {type: select, proxies: [🇭🇰 香港节点, 🇸🇬 狮城节点
 online: &ol {type: select, proxies: [✈️ 故障转移(主), 🔯 故障转移(备), 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🌐 其他地区, 🐸 手动切换1, 🐸 手动切换2, 🐸 手动切换3, 🐸 手动切换4, ♻️ 自动选择, DIRECT]}
 driect: &dr {type: select, proxies: [DIRECT, 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🌐 其他地区, 🐸 手动切换1, 🐸 手动切换2, 🐸 手动切换3, 🐸 手动切换4, ♻️ 自动选择, ✈️ 故障转移(主), 🔯 故障转移(备)]}
 proxy-groups:
-  - {name: 🤖 AI, <<: *pr}
+    - {name: 🤖 AI, <<: *pr}
   - {name: 📹 YouTube, <<: *pr}
   - {name: 📺 Emby, <<: *pr}
   - {name: 📺 Netflix, <<: *pr}
@@ -112,17 +137,17 @@ proxy-groups:
   - {name: 🎮 游戏平台, <<: *pr}
   - {name: 🌍 国外媒体, <<: *pr}
   - {name: ☎️ Google Voice, <<: *pr}
-  - {name: 🍀 Google, <<: *pr}
-  - {name: 🚀 常用外网域名, <<: *pr}
-  - {name: 🕊️ Twitter(X), <<: *pr}
-  - {name: 📲 Telegram, <<: *pr}
-  - {name: 👨🏿‍💻 GitHub, <<: *pr}
-  - {name: 🐟 漏网之鱼, <<: *pr}
-  - {name: 🐬 OneDrive, <<: *pr}
-  - {name: 🪟 Microsoft, <<: *pr}
-  - {name: ♻️ Speedtest, <<: *pr}
-  - {name: 🍎 Apple, <<: *pr}
-  - {name: 🎯 DIRECT, <<: *pr}
+  - {name: 🍀 Google, <<: *ol}
+  - {name: 🚀 常用外网域名, <<: *ol}
+  - {name: 🕊️ Twitter(X), <<: *ol}
+  - {name: 📲 Telegram, <<: *ol}
+  - {name: 👨🏿‍💻 GitHub, <<: *ol}
+  - {name: 🐟 漏网之鱼, <<: *ol}
+  - {name: 🐬 OneDrive, <<: *ol}
+  - {name: 🪟 Microsoft, <<: *dr}
+  - {name: ♻️ Speedtest, <<: *dr}
+  - {name: 🍎 Apple, <<: *dr}
+  - {name: 🎯 DIRECT, <<: *dr}
   - {name: 🇭🇰 香港节点, type: select, include-all: true, filter: "(?i)港|hk|hongkong|hong kong|HK|🇭🇰"}
   - {name: 🇸🇬 狮城节点, type: select, include-all: true, filter: "(?i)新加坡|坡|狮城|sg|singapore"}
   - {name: 🇺🇲 美国节点, type: select, include-all: true, filter: "(?i)美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|us|unitedstates|united states"}
