@@ -7,7 +7,7 @@ proxy-providers:
     health-check:
       enable: true
       url: https://www.gstatic.com/generate_204
-      interval: 300
+      interval: 600
     proxy: DIRECT
     header:
       User-Agent:
@@ -19,7 +19,7 @@ proxy-providers:
     health-check:
       enable: true
       url: https://www.gstatic.com/generate_204
-      interval: 300
+      interval: 600
     proxy: DIRECT
     header:
       User-Agent:
@@ -52,8 +52,8 @@ profile:
   store-fake-ip: true
 
 # 控制面板
-external-controller: 0.0.0.0:9988
-secret: "Gyn78198"
+external-controller: 0.0.0.0:00
+secret: "***"
 external-ui: "/etc/mihomo/run/ui"
 external-ui-name: zashboard
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
