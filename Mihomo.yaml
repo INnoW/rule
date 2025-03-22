@@ -25,18 +25,18 @@ rule-anchor:
   airport 1: &A1 {type: select, use: [airport 1]}
   airport 2: &A2 {type: select, use: [airport 2]}
   Url_test: &URL {type: url-test, include-all: true, interval: 600, lazy: true, url: 'https://www.gstatic.com/generate_204'}
-  FallBack_BitzNet: &FA1 {type: fallback, use: [airport 1], interval: 600, lazy: true, url: 'https://www.gstatic.com/generate_204'}
-  FallBack_PeiQian: &FA2 {type: fallback, use: [airport 2], interval: 600, lazy: true, url: 'https://www.gstatic.com/generate_204'}
+  FallBack_airport 1: &FA1 {type: fallback, use: [airport 1], interval: 600, lazy: true, url: 'https://www.gstatic.com/generate_204'}
+  FallBack_airport 2: &FA2 {type: fallback, use: [airport 2], interval: 600, lazy: true, url: 'https://www.gstatic.com/generate_204'}
   
   # 规则集类型
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
 
-# 机场订阅
+# 机场订阅(填入你的机场订阅链接，如删除机场数量需在前后代理策略组同时修改参数)
 proxy-providers:
-  airport 1: {<<: *SP,  proxy: 🎯 全球直连, url: '机场链接'}     #填入你的机场订阅链接
-  airport 2: {<<: *SP,  proxy: 🎯 全球直连, url: '机场链接'}     #如删除某机场需在下方策略组同时删除锚点参数
+  airport 1: {<<: *SP,  proxy: 🎯 全球直连, url: '机场链接'}
+  airport 2: {<<: *SP,  proxy: 🎯 全球直连, url: '机场链接'}
 
 # 节点信息
 proxies:
