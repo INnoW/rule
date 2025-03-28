@@ -150,7 +150,6 @@ proxy-groups:
   - {name: 漏网之鱼, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Mouse.png"}
   - {name: OneDrive, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png"}
   - {name: Microsoft, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"}
-  - {name: Speedtest, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png"}
   - {name: Apple, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"}
   - {name: 国内直连, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png"}
 
@@ -165,8 +164,8 @@ proxy-groups:
   - {name: 🐽 手动切换3, <<: *SC, filter: *EX}
   - {name: 🐽 手动切换4, <<: *SC, filter: *EX}
   - {name: ♻️ 自动选择, <<: *URL, filter: *EX}
-  - {name: 🛩️ 故障转移(主), <<: *FA1, filter: *EX}
-  - {name: 🔯 故障转移(备), <<: *FA2, filter: *EX}
+  - {name: 🛩️ 故障转移(主), <<: *FBN, filter: *EX}
+  - {name: 🔯 故障转移(备), <<: *FPQ, filter: *EX}
 
 # 规则匹配
 rules:
@@ -179,17 +178,16 @@ rules:
   - RULE-SET,emby_class,Emby
   - RULE-SET,netflix_domain,Netflix
   - RULE-SET,disney_domain,Disney
-  - RULE-SET,apple tv_class,Apple TV
+  - RULE-SET,apple_tv_class,Apple TV
   - RULE-SET,apple_domain,Apple
   - RULE-SET,github_domain,GitHub
   - RULE-SET,onedrive_domain,OneDrive
   - RULE-SET,microsoft_domain,Microsoft
-  - RULE-SET,google voice_class,Google Voice
+  - RULE-SET,google_voice_class,Google Voice
   - RULE-SET,google_domain,Google
   - RULE-SET,steam_domain,游戏平台
   - RULE-SET,epic_domain,游戏平台
-  - RULE-SET,proxy_media_domain,国外媒体
-  - RULE-SET,speedtest_domain,Speedtest
+  - RULE-SET,proxy_media_class,国外媒体
   - RULE-SET,gfw_domain,全局代理
   - RULE-SET,geolocation-!cn,全局代理
   - RULE-SET,cn_domain,国内直连
@@ -204,10 +202,11 @@ rules:
 rule-providers: 
   proxylite_class: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/master/ProxyLite.list"}
   emby_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Emby/Emby.list"}
-  apple tv_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AppleTV/AppleTV.list"}
-  google voice_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GoogleVoice/GoogleVoice.list"}
+  apple_tv_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AppleTV/AppleTV.list"}
+  google_voice_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GoogleVoice/GoogleVoice.list"}
+  proxy_media_class: { <<: *class, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/ProxyMedia.list"}
   private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
-  ai_domain: {  <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-chat-!cn.mrs" }
+  ai_domain: {  <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs" }
   twitter_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/twitter.mrs"}
   telegram_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
   youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
@@ -220,8 +219,6 @@ rule-providers:
   google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
   steam_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs"}
   epic_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/epicgames.mrs"}
-  proxy_media_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo-lite/geosite/proxymedia.mrs"}
-  speedtest_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/ookla-speedtest.mrs"} 
   gfw_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
   geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
   cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
