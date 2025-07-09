@@ -6,6 +6,7 @@ payload:
   - DOMAIN-KEYWORD,emby.wtf
   - DOMAIN-KEYWORD,jmaooo.com
   - DOMAIN-KEYWORD,xeton.dev
+  - DOMAIN-SUFFIX,emby.zn.al
   - DOMAIN-SUFFIX,emby.nexitally.com
   - DOMAIN-SUFFIX,emby.immtel.com
   - DOMAIN-SUFFIX,line.emby.men
