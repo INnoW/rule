@@ -8,9 +8,9 @@ rule-anchor:
   Dns_Direct: &DD ['223.5.5.5', '119.29.29.29']
   
   # 节点策略
-  Proxy: &S1 {type: select, proxies: [🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🌍 其他地区, 🐽 手动切换1, 🐽 手动切换2, 🐽 手动切换3, 🐽 手动切换4, ♻️ 自动选择, 🛩️ 故障转移(主), 🔯 故障转移(备), 🎯 全球直连]}
-  Online: &S2 {type: select, proxies: [🛩️ 故障转移(主), 🔯 故障转移(备), 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🌍 其他地区, 🐽 手动切换1, 🐽 手动切换2, 🐽 手动切换3, 🐽 手动切换4, ♻️ 自动选择, 🎯 全球直连]}
-  Direct: &S3 {type: select, proxies: [🎯 全球直连, 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🌍 其他地区, 🐽 手动切换1, 🐽 手动切换2, 🐽 手动切换3, 🐽 手动切换4, ♻️ 自动选择, 🛩️ 故障转移(主), 🔯 故障转移(备)]}
+  Proxy: &S1 {type: select, proxies: [🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🐽 手动切换1, 🐽 手动切换2, 🛩️ 故障转移, 🎯 全球直连]}
+  Online: &S2 {type: select, proxies: [🛩️ 故障转移, 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🐽 手动切换1, 🐽 手动切换2, 🎯 全球直连]}
+  Direct: &S3 {type: select, proxies: [🎯 全球直连, 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇯🇵 日本节点, 🐽 手动切换1, 🐽 手动切换2, 🛩️ 故障转移]}
   
   # 节点筛选
   Hongkong: &HK "(?=.*(🇭🇰|港|HK|(?i)hong))^((?!(台|日|韩|新|美)).)*$"
@@ -19,6 +19,7 @@ rule-anchor:
   Japan: &JP "(?=.*(🇯🇵|日|JP(?i)japan))^((?!(港|台|韩|新|美)).)*$"
   Other: &OR "^((?!(🇭🇰|港|HK|hong|🇸🇬|新|狮|SGP|singapore|🇺🇸|美|US|states|america|🇯🇵|日|JPjapan|官网|剩余|套餐|流量|套餐|订阅|直连|GB|expireDate|traffic)).)*$"
   Exclude: &EX "^((?!(官网|剩余|套餐|流量|套餐|订阅|直连|GB|expireDate|traffic)).)*$"
+  Combo: &CB "(?=.*(🇭🇰|港|HK|(?i)hong|🇯🇵|日|JP(?i)japan|🇸🇬|新|狮|SGP|(?i)singapore|🇺🇸|美|US|(?i)states|america))^((?!(官网|剩余|套餐|流量|套餐|订阅|直连|GB|expireDate|traffic)).)*$"
   
   # 代理策略组
   All: &SC {type: select, include-all: true} 
@@ -27,6 +28,7 @@ rule-anchor:
   Url_test: &URL {type: url-test, include-all: true, interval: 600, lazy: true, url: 'https://www.gstatic.com/generate_204'}
   FallBack_airport 1: &FA1 {type: fallback, use: [airport 1], interval: 600, lazy: true, url: 'https://www.gstatic.com/generate_204'}
   FallBack_airport 2: &FA2 {type: fallback, use: [airport 2], interval: 600, lazy: true, url: 'https://www.gstatic.com/generate_204'}
+  FallBack_a1a2: &A1A2 {type: fallback, use: [airport 1,airport 2], interval: 600, lazy: false, url: 'https://www.gstatic.com/generate_204'}
   
   # 规则集类型
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
@@ -154,18 +156,17 @@ proxy-groups:
   - {name: 国内直连, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png"}
 
   # 嵌套节点组
+    # - {name: 🌍 其他地区, <<: *SC, filter: *OR}
+    # - {name: ♻️ 自动选择, <<: *URL, filter: *EX}
+    # - {name: 🔯 故障转移(备), <<: *FPQ, filter: *EX}
+  
   - {name: 🇭🇰 香港节点, <<: *SC, filter: *HK}
   - {name: 🇸🇬 狮城节点, <<: *SC, filter: *SGP}
   - {name: 🇺🇲 美国节点, <<: *SC, filter: *USA}
   - {name: 🇯🇵 日本节点, <<: *SC, filter: *JP}
-  - {name: 🌍 其他地区, <<: *SC, filter: *OR}
   - {name: 🐽 手动切换1, <<: *SC, filter: *EX}
   - {name: 🐽 手动切换2, <<: *SC, filter: *EX}
-  - {name: 🐽 手动切换3, <<: *SC, filter: *EX}
-  - {name: 🐽 手动切换4, <<: *SC, filter: *EX}
-  - {name: ♻️ 自动选择, <<: *URL, filter: *EX}
-  - {name: 🛩️ 故障转移(主), <<: *FBN, filter: *EX}
-  - {name: 🔯 故障转移(备), <<: *FPQ, filter: *EX}
+  - {name: 🛩️ 故障转移, <<: *FBP, filter: *CB}
 
 # 规则匹配
 rules:
