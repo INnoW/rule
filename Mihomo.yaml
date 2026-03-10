@@ -86,9 +86,14 @@ sniffer:
       ports: [443, 8443]
   force-domain:
     - "+.v2ex.com"
+    - "+.netflix.com"
+    - "+.nflxvideo.net"
+    - "+.amazonaws.com"
+    - "+.media.dssott.com" 
   skip-domain:
     - "rule-set:private_domain,cn_domain"
     - "dlg.io.mi.com"
+    - Mijia Cloud
     - "+.push.apple.com"
     - "+.apple.com"
     - "+.wechat.com"
@@ -114,11 +119,11 @@ tun:
 # DNS模块
 dns:
   enable: true
-  listen: 0.0.0.0:1053
+  listen: 0.0.0.0:0000
   ipv6: true
   respect-rules: true
   enhanced-mode: fake-ip
-  fake-ip-range: 28.0.0.1/8
+  fake-ip-range: 0.0.0.0/8
   fake-ip-filter-mode: blacklist
   proxy-server-nameserver: *DP
   nameserver: *DD
@@ -141,20 +146,21 @@ proxy-groups:
   - {name: Forluma 1, <<: *S1, icon: "https://raw.githubusercontent.com/INnoW/rule/refs/heads/main/Forluma%201.png"}
   - {name: Apple TV, <<: *S1, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_TV.png"}
   - {name: Apple, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png"}
-  - {name: 游戏平台, <<: *S1, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"}
   - {name: TikTok, <<: *S1, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png"}
   - {name: Netflix, <<: *S1, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png"}
   - {name: Disney, <<: *S1, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney.png"}
+  - {name: 游戏平台, <<: *S1, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png"}
   - {name: 国外媒体, <<: *S1, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AfreecaTV.png"}
   - {name: Google Voice, <<: *S1, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png"}
   - {name: Google, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png"}
   - {name: Twitter(X), <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png"}
   - {name: Telegram, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png"}
   - {name: GitHub, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png"}
-  - {name: 全局代理, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"}
   - {name: OneDrive, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png"}
   - {name: Microsoft, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png"}
+  - {name: Speedtest, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png"}
   - {name: 国内直连, <<: *S3, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png"}
+  - {name: 全局代理, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png"}
   - {name: 漏网之鱼, <<: *S2, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Mouse.png"}
 
   # 嵌套节点组
@@ -172,8 +178,9 @@ proxy-groups:
 
 # 规则匹配
 rules:
+  - RULE-SET,private_ip,国内直连,no-resolve
   - RULE-SET,private_domain,国内直连
-  - RULE-SET,proxylite_class,全局代理
+  - RULE-SET,proxy_class,全局代理
   - RULE-SET,ai_domain,AI
   - RULE-SET,twitter_domain,Twitter(X)
   - RULE-SET,telegram_domain,Telegram
@@ -182,20 +189,22 @@ rules:
   - RULE-SET,formula 1_class,Forluma 1
   - RULE-SET,apple_tv_domain,Apple TV
   - RULE-SET,apple_domain,Apple
+  - RULE-SET,tiktok_domain,TikTok
   - RULE-SET,netflix_domain,Netflix
   - RULE-SET,disney_domain,Disney
   - RULE-SET,github_domain,GitHub
+  - RULE-SET,speedtest_domain,Speedtest
   - RULE-SET,onedrive_domain,OneDrive
   - RULE-SET,microsoft_domain,Microsoft
   - RULE-SET,google_voice_class,Google Voice
   - RULE-SET,google_domain,Google
   - RULE-SET,steam_domain,游戏平台
   - RULE-SET,epic_domain,游戏平台
-  - RULE-SET,tiktok_domain,TikTok
   - RULE-SET,proxy_media_class,国外媒体
   - RULE-SET,gfw_domain,全局代理
   - RULE-SET,geolocation-!cn,全局代理
   - RULE-SET,cn_domain,国内直连
+  - RULE-SET,apple_ip,Apple,no-resolve
   - RULE-SET,twitter_ip,Twitter(X),no-resolve
   - RULE-SET,telegram_ip,Telegram,no-resolve
   - RULE-SET,netflix_ip,Netflix,no-resolve
@@ -205,8 +214,8 @@ rules:
 
 # 远程规则集 
 rule-providers: 
-  proxylite_class: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/proxy.list"}
-  emby_class: { <<: *class, url: "https://raw.githubusercontent.com/INnoW/rule/refs/heads/main/Emby.list"}
+  proxy_class: { <<: *class, url: "https://github.com/INnoW/rule/raw/refs/heads/main/proxy.list"}
+  emby_class: { <<: *class, url: "https://github.com/INnoW/rule/raw/refs/heads/main/Embylite.list"}
   formula 1_class: { <<: *class, url: "https://raw.githubusercontent.com/INnoW/rule/refs/heads/main/Formula%201.list"}
   google_voice_class: { <<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GoogleVoice/GoogleVoice.list"}
   proxy_media_class: { <<: *class, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/ProxyMedia.list"}
@@ -217,20 +226,23 @@ rule-providers:
   youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
   apple_tv_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple-tvplus.mrs"}
   apple_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple.mrs"}
+  tiktok_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tiktok.mrs"}
   netflix_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
   disney_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/disney.mrs"}
   github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  speedtest_domain:  { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/ookla-speedtest.mrs"}
   onedrive_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/onedrive.mrs"}
   microsoft_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
   google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
   steam_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/steam.mrs"}
   epic_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/epicgames.mrs"}
-  tiktok_domain: { <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/tiktok.mrs"}
   gfw_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
   geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
   cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
-  cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
-  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  apple_ip: { <<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo-lite/geoip/apple.mrs"}
   twitter_ip: { <<: *ip, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/twitter.mrs"}
   telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
   netflix_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
+  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
