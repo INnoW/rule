@@ -1,6 +1,6 @@
-# 代理补充列表
+# > 代理补充列表
 
-# 国外DNS
+# > 国外DNS
 DOMAIN-SUFFIX,dns.google
 DOMAIN-SUFFIX,1dot1dot1dot1.cloudflare-dns.com
 DOMAIN-SUFFIX,dot.sb
